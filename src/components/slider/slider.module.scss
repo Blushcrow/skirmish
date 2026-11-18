@@ -1,0 +1,25 @@
+.container {
+  width: fit-content;
+
+  .controls {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+  }
+}
+.rails {
+  container-type: inline-size;
+  width: 400px;
+  height: 20px;
+  border: 2px solid var(--dark-text);
+  margin: 10px 0;
+}
+.slider {
+  box-shadow: 0 0 0 4px var(--dark-text);
+  height: 100%;
+  width: 0;
+}
+.delay {
+  height: 5px;
+  background: var(--dark-text);
+}
