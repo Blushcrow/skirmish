@@ -1,12 +1,35 @@
-import Slider from "./components/slider/slider.tsx";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
+import type { Transport } from "./components/peerTransport/transport";
+import Lobby from "./components/Lobby/Lobby";
 
 function App() {
+  const [session, setSession] = useState<{ transport: Transport } | null>(null);
+  const [history, setHistory] = useState<string>("");
+  const fieldRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const off = session?.transport.onMessage((msg) => {
+      setHistory(history + "/n" + msg.body);
+    });
+    return off;
+  }, [session?.transport]);
+
+  if (!session) return <Lobby onReady={(transport) => setSession({ transport })} />;
   return (
     <>
-      <Slider delay={300} speed={1} hit={0.25} crit={0.2} />
-      <Slider delay={500} speed={1} hit={0.25} crit={0.2} />
-      <Slider delay={800} speed={1} hit={0.25} crit={0.2} />
+      <input ref={fieldRef} type="text"></input>
+      <button
+        onClick={() => {
+          if (!fieldRef.current) return;
+          setHistory(history + "/n" + fieldRef.current.value);
+          session.transport.send({ body: fieldRef.current.value });
+          fieldRef.current.value = "";
+        }}
+      >
+        spam
+      </button>
+      <div>{history}</div>
     </>
   );
 }
