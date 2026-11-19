@@ -5,3 +5,7 @@
   --dark-text: #06362d;
   --accent: #d1a505;
 }
+#history {
+  display: flex;
+  flex-direction: column-reverse;
+}

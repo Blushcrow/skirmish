@@ -1,4 +1,4 @@
-export type Msg = { body: string; [key: string]: unknown };
+export type Msg = { body: string; source: string; [key: string]: unknown };
 
 export interface Transport {
   send(msg: Msg): void;
